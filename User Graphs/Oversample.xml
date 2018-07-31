@@ -1,0 +1,49 @@
+<graph id="Graph">
+  <version>1.0</version>
+  <node id="Read">
+    <operator>Read</operator>
+    <sources/>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <file>/Data/SAR_NAS/TerraSAR-X/TSX1_SSC_SM_S_20140807T220501/TSX-1.SAR.L1B/TSX1_SAR__SSC______SM_S_SRA_20140807T220453_20140807T220501/TSX1_SAR__SSC______SM_S_SRA_20140807T220453_20140807T220501.xml</file>
+    </parameters>
+  </node>
+  <node id="Oversample">
+    <operator>Oversample</operator>
+    <sources>
+      <sourceProduct refid="Read"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <sourceBands/>
+      <outputImageBy>Ratio</outputImageBy>
+      <targetImageHeight>1000</targetImageHeight>
+      <targetImageWidth>1000</targetImageWidth>
+      <widthRatio>4.0</widthRatio>
+      <heightRatio>4.0</heightRatio>
+      <rangeSpacing>12.5</rangeSpacing>
+      <azimuthSpacing>12.5</azimuthSpacing>
+      <usePRFTileSize>false</usePRFTileSize>
+    </parameters>
+  </node>
+  <node id="Write">
+    <operator>Write</operator>
+    <sources>
+      <sourceProduct refid="Oversample"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <file>/home/constantinevi/InSAR/Projects/Jufen_Creeping/Processed Products/TSX1_SAR_SSC_SM_S_SRA_20140807T220453_20140807T220501_Ovr.dim</file>
+      <formatName>BEAM-DIMAP</formatName>
+    </parameters>
+  </node>
+  <applicationData id="Presentation">
+    <Description/>
+    <node id="Read">
+            <displayPosition x="37.0" y="134.0"/>
+    </node>
+    <node id="Oversample">
+      <displayPosition x="234.0" y="133.0"/>
+    </node>
+    <node id="Write">
+            <displayPosition x="455.0" y="135.0"/>
+    </node>
+  </applicationData>
+</graph>

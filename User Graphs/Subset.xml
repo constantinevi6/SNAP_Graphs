@@ -1,0 +1,48 @@
+<graph id="Graph">
+  <version>1.0</version>
+  <node id="Read">
+    <operator>Read</operator>
+    <sources/>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <file>/home/constantinevi/InSAR/Projects/2014_2016_Subsident_Central_Taiwan/Oversample/TSX1_SAR__SSC______SM_S_SRA_20140807T220453_20140807T220501.dim</file>
+    </parameters>
+  </node>
+  <node id="Subset">
+    <operator>Subset</operator>
+    <sources>
+      <sourceProduct refid="Read"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <sourceBands/>
+      <region>0,0,51896,117408</region>
+      <geoRegion>POLYGON ((120.16999816894531 23.889999389648438, 120.55000305175781 23.889999389648438, 120.55000305175781 23.549999237060547, 120.16999816894531 23.549999237060547, 120.16999816894531 23.889999389648438, 120.16999816894531 23.889999389648438))</geoRegion>
+      <subSamplingX>1</subSamplingX>
+      <subSamplingY>1</subSamplingY>
+      <fullSwath>false</fullSwath>
+      <tiePointGridNames/>
+      <copyMetadata>true</copyMetadata>
+    </parameters>
+  </node>
+  <node id="Write">
+    <operator>Write</operator>
+    <sources>
+      <sourceProduct refid="Subset"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <file>/home/constantinevi/InSAR/Projects/2014_2016_Subsident_Central_Taiwan/Processed Products/Subset_TSX1_SAR__SSC______SM_S_SRA_20140807T220453_20140807T220501.dim</file>
+      <formatName>BEAM-DIMAP</formatName>
+    </parameters>
+  </node>
+  <applicationData id="Presentation">
+    <Description/>
+    <node id="Read">
+            <displayPosition x="37.0" y="134.0"/>
+    </node>
+    <node id="Subset">
+      <displayPosition x="264.0" y="135.0"/>
+    </node>
+    <node id="Write">
+            <displayPosition x="455.0" y="135.0"/>
+    </node>
+  </applicationData>
+</graph>

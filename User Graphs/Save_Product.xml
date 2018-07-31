@@ -1,0 +1,29 @@
+<graph id="Graph">
+  <version>1.0</version>
+  <node id="Read">
+    <operator>Read</operator>
+    <sources/>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <file>W:\ALOS-2\ALOS2145720450-170202\VOL-ALOS2145720450-170202-FBDR1.1__A</file>
+    </parameters>
+  </node>
+  <node id="Write">
+    <operator>Write</operator>
+    <sources>
+      <sourceProduct refid="Read"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <file>D:\Users\constantinevi\InSAR\TE\Processed Products\ALOS2-FBDR1_1__A-ORBIT__ALOS2145720450-170202.dim</file>
+      <formatName>BEAM-DIMAP</formatName>
+    </parameters>
+  </node>
+  <applicationData id="Presentation">
+    <Description/>
+    <node id="Read">
+            <displayPosition x="37.0" y="134.0"/>
+    </node>
+    <node id="Write">
+            <displayPosition x="455.0" y="135.0"/>
+    </node>
+  </applicationData>
+</graph>

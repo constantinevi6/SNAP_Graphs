@@ -1,0 +1,167 @@
+<graph id="Graph">
+  <version>1.0</version>
+  <node id="Read">
+    <operator>Read</operator>
+    <sources/>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement"/>
+  </node>
+  <node id="Calibration">
+    <operator>Calibration</operator>
+    <sources>
+      <sourceProduct refid="Read"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <sourceBands/>
+      <auxFile>Latest Auxiliary File</auxFile>
+      <externalAuxFile/>
+      <outputImageInComplex>false</outputImageInComplex>
+      <outputImageScaleInDb>true</outputImageScaleInDb>
+      <createGammaBand>false</createGammaBand>
+      <createBetaBand>false</createBetaBand>
+      <selectedPolarisations/>
+      <outputSigmaBand>true</outputSigmaBand>
+      <outputGammaBand>false</outputGammaBand>
+      <outputBetaBand>false</outputBetaBand>
+    </parameters>
+  </node>
+  <node id="Multilook">
+    <operator>Multilook</operator>
+    <sources>
+      <sourceProduct refid="Calibration"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <sourceBands/>
+      <nRgLooks>1</nRgLooks>
+      <nAzLooks>1</nAzLooks>
+      <outputIntensity>false</outputIntensity>
+      <grSquarePixel>true</grSquarePixel>
+    </parameters>
+  </node>
+  <node id="Speckle-Filter">
+    <operator>Speckle-Filter</operator>
+    <sources>
+      <sourceProduct refid="Multilook"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <sourceBands/>
+      <filter>Lee Sigma</filter>
+      <filterSizeX>3</filterSizeX>
+      <filterSizeY>3</filterSizeY>
+      <dampingFactor>2</dampingFactor>
+      <estimateENL>true</estimateENL>
+      <enl>1.0</enl>
+      <numLooksStr>1</numLooksStr>
+      <windowSize>7x7</windowSize>
+      <targetWindowSizeStr>3x3</targetWindowSizeStr>
+      <sigmaStr>0.9</sigmaStr>
+      <anSize>50</anSize>
+    </parameters>
+  </node>
+  <node id="SRGR">
+    <operator>SRGR</operator>
+    <sources>
+      <sourceProduct refid="Speckle-Filter"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <sourceBands/>
+      <warpPolynomialOrder>4</warpPolynomialOrder>
+      <interpolationMethod>Linear interpolation</interpolationMethod>
+    </parameters>
+  </node>
+  <node id="Terrain-Correction">
+    <operator>Terrain-Correction</operator>
+    <sources>
+      <sourceProduct refid="SRGR"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <sourceBands/>
+      <demName>SRTM 1Sec HGT</demName>
+      <externalDEMFile/>
+      <externalDEMNoDataValue>0.0</externalDEMNoDataValue>
+      <externalDEMApplyEGM>true</externalDEMApplyEGM>
+      <demResamplingMethod>CUBIC_CONVOLUTION</demResamplingMethod>
+      <imgResamplingMethod>CUBIC_CONVOLUTION</imgResamplingMethod>
+      <pixelSpacingInMeter>0.0</pixelSpacingInMeter>
+      <pixelSpacingInDegree>0.0</pixelSpacingInDegree>
+      <mapProjection>GEOGCS[&quot;WGS84(DD)&quot;, &#xd;
+  DATUM[&quot;WGS84&quot;, &#xd;
+    SPHEROID[&quot;WGS84&quot;, 6378137.0, 298.257223563]], &#xd;
+  PRIMEM[&quot;Greenwich&quot;, 0.0], &#xd;
+  UNIT[&quot;degree&quot;, 0.017453292519943295], &#xd;
+  AXIS[&quot;Geodetic longitude&quot;, EAST], &#xd;
+  AXIS[&quot;Geodetic latitude&quot;, NORTH]]</mapProjection>
+      <alignToStandardGrid>false</alignToStandardGrid>
+      <standardGridOriginX>0.0</standardGridOriginX>
+      <standardGridOriginY>0.0</standardGridOriginY>
+      <nodataValueAtSea>true</nodataValueAtSea>
+      <saveDEM>false</saveDEM>
+      <saveLatLon>false</saveLatLon>
+      <saveIncidenceAngleFromEllipsoid>false</saveIncidenceAngleFromEllipsoid>
+      <saveLocalIncidenceAngle>false</saveLocalIncidenceAngle>
+      <saveProjectedLocalIncidenceAngle>false</saveProjectedLocalIncidenceAngle>
+      <saveSelectedSourceBand>true</saveSelectedSourceBand>
+      <outputComplex>false</outputComplex>
+      <applyRadiometricNormalization>false</applyRadiometricNormalization>
+      <saveSigmaNought>false</saveSigmaNought>
+      <saveGammaNought>false</saveGammaNought>
+      <saveBetaNought>false</saveBetaNought>
+      <incidenceAngleForSigma0>Use projected local incidence angle from DEM</incidenceAngleForSigma0>
+      <incidenceAngleForGamma0>Use projected local incidence angle from DEM</incidenceAngleForGamma0>
+      <auxFile>Latest Auxiliary File</auxFile>
+      <externalAuxFile/>
+    </parameters>
+  </node>
+  <node id="Subset">
+    <operator>Subset</operator>
+    <sources>
+      <sourceProduct refid="Terrain-Correction"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <sourceBands/>
+      <region>0,0,0,0</region>
+      <geoRegion/>
+      <subSamplingX>1</subSamplingX>
+      <subSamplingY>1</subSamplingY>
+      <fullSwath>false</fullSwath>
+      <tiePointGridNames/>
+      <copyMetadata>true</copyMetadata>
+    </parameters>
+  </node>
+  <node id="Write">
+    <operator>Write</operator>
+    <sources>
+      <sourceProduct refid="Subset"/>
+    </sources>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
+      <file>D:\Users\constantinevi\InSAR\target.dim</file>
+      <formatName>BEAM-DIMAP</formatName>
+    </parameters>
+  </node>
+  <applicationData id="Presentation">
+    <Description/>
+    <node id="Read">
+      <displayPosition x="9.0" y="68.0"/>
+    </node>
+    <node id="Calibration">
+      <displayPosition x="78.0" y="69.0"/>
+    </node>
+    <node id="Multilook">
+      <displayPosition x="156.0" y="70.0"/>
+    </node>
+    <node id="Speckle-Filter">
+      <displayPosition x="224.0" y="70.0"/>
+    </node>
+    <node id="SRGR">
+      <displayPosition x="317.0" y="70.0"/>
+    </node>
+    <node id="Terrain-Correction">
+      <displayPosition x="385.0" y="70.0"/>
+    </node>
+    <node id="Subset">
+      <displayPosition x="506.0" y="71.0"/>
+    </node>
+    <node id="Write">
+      <displayPosition x="578.0" y="72.0"/>
+    </node>
+  </applicationData>
+</graph>
