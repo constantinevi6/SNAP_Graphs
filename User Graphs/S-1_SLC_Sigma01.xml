@@ -3,9 +3,7 @@
   <node id="Read">
     <operator>Read</operator>
     <sources/>
-    <parameters class="com.bc.ceres.binding.dom.XppDomElement">
-      <file>/Data/SAR_NAS/Sentinel1/S1A_IW_SLC__1SDV_20150911T100054_B6FC/manifest.safe</file>
-    </parameters>
+    <parameters class="com.bc.ceres.binding.dom.XppDomElement"/>
   </node>
   <node id="ThermalNoiseRemoval">
     <operator>ThermalNoiseRemoval</operator>
